@@ -34,15 +34,16 @@ http://localhost:1420/localnet/transaction-wizard?type[0]=pay&sender[0]=TGIPEOKU
 
 ## ✅ Supported Query Parameters
 
-Parameter Description Required
-type[0] Must be "pay" ✅
-sender[0] Algorand sender address ✅
-receiver[0] Algorand receiver address ✅
-amount[0] Transfer amount in microAlgos ✅
-fee[0] Optional transaction fee (microAlgos)❌
-validRound[0] Optional first valid round ❌
-note[0] Optional free-form note ❌
-closeRemainderTo[0] Optional close-to address ❌
+| Parameter             | Description                           | Required |
+| --------------------- | ------------------------------------- | -------- |
+| `type[0]`             | Must be `"pay"`                       | ✅       |
+| `sender[0]`           | Algorand sender address               | ✅       |
+| `receiver[0]`         | Algorand receiver address             | ✅       |
+| `amount[0]`           | Transfer amount in microAlgos         | ✅       |
+| `fee[0]`              | Optional transaction fee (microAlgos) | ❌       |
+| `validRound[0]`       | Optional first valid round            | ❌       |
+| `note[0]`             | Optional free-form note               | ❌       |
+| `closeRemainderTo[0]` | Optional close-to address             | ❌       |
 
 ## 🌐 Example URLs
 
@@ -66,53 +67,52 @@ Invalid parameter structure - Transaction skipped or safely ignored
 
 ## ✅ Tests
 
-Unit Test
-
+```ts
+// Unit Test
 import { transformPaymentTransaction } from '@/utils/transactionTransformer'
 
 it('Parses valid payment parameters', () => {
-const params = {
-type: 'pay',
-sender: 'ADDR1',
-receiver: 'ADDR2',
-amount: '1',
-fee: '1000',
-validRound: '1000'
-}
+  const params = {
+    type: 'pay',
+    sender: 'ADDR1',
+    receiver: 'ADDR2',
+    amount: '1',
+    fee: '1000',
+    validRound: '1000'
+  }
 
-const result = transformPaymentTransaction(params)
+  const result = transformPaymentTransaction(params)
 
-expect(result).toEqual({
-type: 'pay',
-sender: { value: 'ADDR1' },
-receiver: { value: 'ADDR2' },
-amount: { value: 1 },
-fee: { value: 1000 },
-validRound: { value: 1000 },
+  expect(result).toEqual({
+    type: 'pay',
+    sender: { value: 'ADDR1' },
+    receiver: { value: 'ADDR2' },
+    amount: { value: 1 },
+    fee: { value: 1000 },
+    validRound: { value: 1000 },
+  })
 })
-})
-Integration Test
-ts
-Copy
-Edit
+
+// Integration Test
 it('should render sender and receiver from URL', () => {
-const sender = 'TGIPEOKUFC5JFTPF...'
-const receiver = 'AENCK6AVVGCOQM6XG...'
+  const sender = 'TGIPEOKUFC5JFTPF...'
+  const receiver = 'AENCK6AVVGCOQM6XG...'
 
-renderTxnsWizardPageWithSearchParams({
-searchParams: new URLSearchParams({
-'type[0]': 'pay',
-'sender[0]': sender,
-'receiver[0]': receiver,
-'amount[0]': '1',
-'fee[0]': '1000',
-'validRound[0]': '1000'
-}),
+  renderTxnsWizardPageWithSearchParams({
+    searchParams: new URLSearchParams({
+      'type[0]': 'pay',
+      'sender[0]': sender,
+      'receiver[0]': receiver,
+      'amount[0]': '1',
+      'fee[0]': '1000',
+      'validRound[0]': '1000'
+    }),
+  })
+
+  expect(screen.getByText(sender)).toBeInTheDocument()
+  expect(screen.getByText(receiver)).toBeInTheDocument()
 })
 
-expect(screen.getByText(sender)).toBeInTheDocument()
-expect(screen.getByText(receiver)).toBeInTheDocument()
-})
 
 ## 🛠 Developer Notes
 
@@ -139,7 +139,5 @@ update README with parameter docs, examples, and error messages (#wizard-pay) (9
 refactor transformer to improve data types for URL param usage (#wizard-pay) (4918bf5)
 
 update .env to use sample config for local dev (#wizard-pay) (662ecbf)
-
-```
 
 ```
