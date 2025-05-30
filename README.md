@@ -20,10 +20,16 @@ You can now deep link into the Transaction Wizard with a valid payment transacti
 # Install dependencies
 npm install
 
-# Create a .env file and configure it as needed
+# Create a .env file and configure it using .env.sample
+
+# Run Algorand localnet with docker and algokit
+algokit localnet init
 
 # Run the development server
 npm run dev
+
+# Run payment URL search params tests
+npm run test -- transactions-url-search-params
 ```
 
 ## 🔗 Example URL
