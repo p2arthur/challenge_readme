@@ -24,95 +24,98 @@ npm install
 
 # Run the development server
 npm run dev
-🔗 Example URL
+```
+
+## 🔗 Example URL
+
 http://localhost:1420/localnet/transaction-wizard?type[0]=pay&sender[0]=TGIPEOKUFC5JFTPFMXGSZWOGOFA7THFZXUTRLQEOH3RD3LGI6QEEWJNML4&fee[0]=1000&receiver[0]=TGIPEOKUFC5JFTPFMXGSZWOGOFA7THFZXUTRLQEOH3RD3LGI6QEEWJNML4&amount[0]=1
 
-📘 Documentation
+## 📘 Documentation
 
-✅ Supported Query Parameters
-Parameter	               Description	         Required
-type[0]	                Must be "pay"	            ✅
-sender[0]	           Algorand sender address      ✅
-receiver[0]	       Algorand receiver address	    ✅
-amount[0]	      Transfer amount in microAlgos	    ✅
-fee[0]	     Optional transaction fee (microAlgos)❌
-validRound[0]	      Optional first valid round	  ❌
-note[0]	            Optional free-form note       ❌
-closeRemainderTo[0]	Optional close-to address	    ❌
+## ✅ Supported Query Parameters
 
-🌐 Example URLs
+Parameter Description Required
+type[0] Must be "pay" ✅
+sender[0] Algorand sender address ✅
+receiver[0] Algorand receiver address ✅
+amount[0] Transfer amount in microAlgos ✅
+fee[0] Optional transaction fee (microAlgos)❌
+validRound[0] Optional first valid round ❌
+note[0] Optional free-form note ❌
+closeRemainderTo[0] Optional close-to address ❌
+
+## 🌐 Example URLs
+
 Minimal valid transaction:
 
-bash
-Copy
-Edit
 http://localhost:1420/localnet/transaction-wizard?type[0]=pay&sender[0]=ADDR1&receiver[0]=ADDR2&amount[0]=1000000
+
 With optional fields:
 
-bash
-Copy
-Edit
 http://localhost:1420/localnet/transaction-wizard?type[0]=pay&sender[0]=ADDR1&receiver[0]=ADDR2&amount[0]=1000000&fee[0]=1000&validRound[0]=2000
-⚠️ Error Scenarios
-Scenario	Error Message
-Missing required sender	Error in transaction at index 0 in the following fields: sender-value, sender-resolvedAddress
-Missing required receiver	Error in transaction at index 0 in the following fields: receiver-value, receiver-resolvedAddress
-amount = 0	Error in transaction at index 0 in the following fields: amount
-Malformed Algorand address	Field-specific error related to -value and -resolvedAddress
-Missing or incorrect type[0]	Transaction is ignored; fallback to "No transactions."
-Invalid parameter structure	Transaction skipped or safely ignored
 
-✅ Tests
+## ⚠️ Error Scenarios
+
+Scenario Error Message
+Missing required sender - Error in transaction at index 0 in the following fields: sender-value, sender-resolvedAddress
+Missing required receiver - Error in transaction at index 0 in the following fields: receiver-value, receiver-resolvedAddress
+amount = 0 - Error in transaction at index 0 in the following fields: amount
+Malformed Algorand address - Field-specific error related to -value and -resolvedAddress
+Missing or incorrect type[0] - Transaction is ignored; fallback to "No transactions."
+Invalid parameter structure - Transaction skipped or safely ignored
+
+## ✅ Tests
+
 Unit Test
-ts
-Copy
-Edit
+
 import { transformPaymentTransaction } from '@/utils/transactionTransformer'
 
 it('Parses valid payment parameters', () => {
-  const params = {
-    type: 'pay',
-    sender: 'ADDR1',
-    receiver: 'ADDR2',
-    amount: '1',
-    fee: '1000',
-    validRound: '1000'
-  }
+const params = {
+type: 'pay',
+sender: 'ADDR1',
+receiver: 'ADDR2',
+amount: '1',
+fee: '1000',
+validRound: '1000'
+}
 
-  const result = transformPaymentTransaction(params)
+const result = transformPaymentTransaction(params)
 
-  expect(result).toEqual({
-    type: 'pay',
-    sender: { value: 'ADDR1' },
-    receiver: { value: 'ADDR2' },
-    amount: { value: 1 },
-    fee: { value: 1000 },
-    validRound: { value: 1000 },
-  })
+expect(result).toEqual({
+type: 'pay',
+sender: { value: 'ADDR1' },
+receiver: { value: 'ADDR2' },
+amount: { value: 1 },
+fee: { value: 1000 },
+validRound: { value: 1000 },
+})
 })
 Integration Test
 ts
 Copy
 Edit
 it('should render sender and receiver from URL', () => {
-  const sender = 'TGIPEOKUFC5JFTPF...'
-  const receiver = 'AENCK6AVVGCOQM6XG...'
+const sender = 'TGIPEOKUFC5JFTPF...'
+const receiver = 'AENCK6AVVGCOQM6XG...'
 
-  renderTxnsWizardPageWithSearchParams({
-    searchParams: new URLSearchParams({
-      'type[0]': 'pay',
-      'sender[0]': sender,
-      'receiver[0]': receiver,
-      'amount[0]': '1',
-      'fee[0]': '1000',
-      'validRound[0]': '1000'
-    }),
-  })
-
-  expect(screen.getByText(sender)).toBeInTheDocument()
-  expect(screen.getByText(receiver)).toBeInTheDocument()
+renderTxnsWizardPageWithSearchParams({
+searchParams: new URLSearchParams({
+'type[0]': 'pay',
+'sender[0]': sender,
+'receiver[0]': receiver,
+'amount[0]': '1',
+'fee[0]': '1000',
+'validRound[0]': '1000'
+}),
 })
-🛠 Developer Notes
+
+expect(screen.getByText(sender)).toBeInTheDocument()
+expect(screen.getByText(receiver)).toBeInTheDocument()
+})
+
+## 🛠 Developer Notes
+
 Parsing logic lives in utils/transactionTransformer.ts
 
 The wizard uses URLSearchParams for param extraction
@@ -121,7 +124,8 @@ Errors appear inline and point to failing fields
 
 Applies only to pay transactions (keyreg already supported)
 
-📝 Changelog
+## 📝 Changelog
+
 add support for parsing payment transactions from URL params (#wizard-pay) (917c943)
 
 add zod schema for payment validation (#wizard-pay) (be51659)
@@ -135,4 +139,7 @@ update README with parameter docs, examples, and error messages (#wizard-pay) (9
 refactor transformer to improve data types for URL param usage (#wizard-pay) (4918bf5)
 
 update .env to use sample config for local dev (#wizard-pay) (662ecbf)
+
+```
+
 ```
