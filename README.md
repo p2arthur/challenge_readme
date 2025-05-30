@@ -69,50 +69,50 @@ Invalid parameter structure - Transaction skipped or safely ignored
 
 ```ts
 // Unit Test
-import { transformPaymentTransaction } from '@/utils/transactionTransformer'
+import { transformPaymentTransaction } from "@/utils/transactionTransformer";
 
-it('Parses valid payment parameters', () => {
+it("Parses valid payment parameters", () => {
   const params = {
-    type: 'pay',
-    sender: 'ADDR1',
-    receiver: 'ADDR2',
-    amount: '1',
-    fee: '1000',
-    validRound: '1000'
-  }
+    type: "pay",
+    sender: "ADDR1",
+    receiver: "ADDR2",
+    amount: "1",
+    fee: "1000",
+    validRound: "1000",
+  };
 
-  const result = transformPaymentTransaction(params)
+  const result = transformPaymentTransaction(params);
 
   expect(result).toEqual({
-    type: 'pay',
-    sender: { value: 'ADDR1' },
-    receiver: { value: 'ADDR2' },
+    type: "pay",
+    sender: { value: "ADDR1" },
+    receiver: { value: "ADDR2" },
     amount: { value: 1 },
     fee: { value: 1000 },
     validRound: { value: 1000 },
-  })
-})
+  });
+});
 
 // Integration Test
-it('should render sender and receiver from URL', () => {
-  const sender = 'TGIPEOKUFC5JFTPF...'
-  const receiver = 'AENCK6AVVGCOQM6XG...'
+it("should render sender and receiver from URL", () => {
+  const sender = "TGIPEOKUFC5JFTPF...";
+  const receiver = "AENCK6AVVGCOQM6XG...";
 
   renderTxnsWizardPageWithSearchParams({
     searchParams: new URLSearchParams({
-      'type[0]': 'pay',
-      'sender[0]': sender,
-      'receiver[0]': receiver,
-      'amount[0]': '1',
-      'fee[0]': '1000',
-      'validRound[0]': '1000'
+      "type[0]": "pay",
+      "sender[0]": sender,
+      "receiver[0]": receiver,
+      "amount[0]": "1",
+      "fee[0]": "1000",
+      "validRound[0]": "1000",
     }),
-  })
+  });
 
-  expect(screen.getByText(sender)).toBeInTheDocument()
-  expect(screen.getByText(receiver)).toBeInTheDocument()
-})
-
+  expect(screen.getByText(sender)).toBeInTheDocument();
+  expect(screen.getByText(receiver)).toBeInTheDocument();
+});
+```
 
 ## 🛠 Developer Notes
 
@@ -139,5 +139,3 @@ update README with parameter docs, examples, and error messages (#wizard-pay) (9
 refactor transformer to improve data types for URL param usage (#wizard-pay) (4918bf5)
 
 update .env to use sample config for local dev (#wizard-pay) (662ecbf)
-
-```
