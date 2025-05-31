@@ -1,5 +1,3 @@
-# Mid level web3 engineer - Technincal coding challenge
-
 # 💸 Transaction Wizard – Payment via URL Parameters
 
 This update adds support for creating **payment transactions** in the Transaction Wizard directly from URL query parameters.
@@ -62,16 +60,20 @@ http://localhost:1420/localnet/transaction-wizard?type[0]=pay&sender[0]=ADDR1&re
 With optional fields:
 
 http://localhost:1420/localnet/transaction-wizard?type[0]=pay&sender[0]=ADDR1&receiver[0]=ADDR2&amount[0]=1000000&fee[0]=1000&validRound[0]=2000
+![alt text](transaction_wizard_populated.png)
 
 ## ⚠️ Error Scenarios
 
-Scenario Error Message
-Missing required sender - Error in transaction at index 0 in the following fields: sender-value, sender-resolvedAddress
-Missing required receiver - Error in transaction at index 0 in the following fields: receiver-value, receiver-resolvedAddress
-amount = 0 - Error in transaction at index 0 in the following fields: amount
-Malformed Algorand address - Field-specific error related to -value and -resolvedAddress
-Missing or incorrect type[0] - Transaction is ignored; fallback to "No transactions."
-Invalid parameter structure - Transaction skipped or safely ignored
+| Scenario                       | Error Message                                                                                         |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| Missing required `sender`      | Error in transaction at index 0 in the following fields: `sender-value`, `sender-resolvedAddress`     |
+| Missing required `receiver`    | Error in transaction at index 0 in the following fields: `receiver-value`, `receiver-resolvedAddress` |
+| `amount = 0`                   | Error in transaction at index 0 in the following fields: `amount`                                     |
+| Malformed Algorand address     | Field-specific error related to `-value` and `-resolvedAddress`                                       |
+| Missing or incorrect `type[0]` | Transaction is ignored; fallback to "No transactions."                                                |
+| Invalid parameter structure    | Transaction skipped or safely ignored                                                                 |
+
+![alt text](zero_amount_param_error.png)
 
 ## ✅ Tests
 
@@ -128,7 +130,7 @@ Parsing logic lives in utils/transactionTransformer.ts
 
 The wizard uses URLSearchParams for param extraction
 
-Errors appear inline and point to failing fields
+Errors appear in a toast and point to failing fields
 
 Applies only to pay transactions (keyreg already supported)
 
@@ -147,4 +149,3 @@ update README with parameter docs, examples, and error messages (#wizard-pay) (9
 refactor transformer to improve data types for URL param usage (#wizard-pay) (4918bf5)
 
 update .env to use sample config for local dev (#wizard-pay) (662ecbf)
-![alt text](image.png)
