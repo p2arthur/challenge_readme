@@ -1,3 +1,16 @@
+# Transaction Wizard URL Parameters
+
+A written walkthrough of payment-form prefilling through URL parameters in AlgoKit Lora's Transaction Wizard.
+
+The repository contains the challenge documentation and supporting images. The implementation belongs to the referenced Lora work; this repository is the explanation and submission artifact.
+
+## Existing project notes
+
+The original guide below preserves project-specific context, credits, examples, and historical setup details. Referenced providers, branches, and deployments may have changed since it was written.
+
+<details>
+<summary>Read the original project documentation</summary>
+
 # 💸 Transaction Wizard – Payment via URL Parameters
 
 This update adds support for creating **payment transactions** in the Transaction Wizard directly from URL query parameters.
@@ -149,3 +162,5 @@ update README with parameter docs, examples, and error messages (#wizard-pay) (9
 refactor transformer to improve data types for URL param usage (#wizard-pay) (4918bf5)
 
 update .env to use sample config for local dev (#wizard-pay) (662ecbf)
+
+</details>
